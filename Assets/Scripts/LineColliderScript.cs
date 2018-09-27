@@ -28,10 +28,12 @@ public class LineColliderScript : MonoBehaviour {
 			float percentage = blueCount / (blueCount + redCount);
 
 			Debug.Log ("blue percentage = " + percentage);
-			if (percentage > 0.5f)
-				Debug.Log ("Blue wins");
-			else
-				Debug.Log ("Red wins");
+            if (percentage > 0.5f)
+                Debug.Log("Blue wins");
+            else if (percentage == 0.5f)
+                Debug.Log("It's a tie");
+            else
+                Debug.Log("Red wins");
 		}
 
 	}
