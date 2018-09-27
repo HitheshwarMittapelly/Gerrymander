@@ -6,18 +6,17 @@ public class MapScript : MonoBehaviour {
 
 	public GameObject line;
 
-	//private LineRenderer lineRenderer;
-
+	
 	private Vector3 initPos;
-	private List<Vector3> linePoints = new List<Vector3>();
+
 	private GameObject lineInstance;
-	int lineCount = 0;
-	bool notInstantiated = true;
+	
+	
 	// Use this for initialization
 
 	void Start () 
 	{
-		//lineRenderer = GetComponent<LineRenderer> ();
+		
 
 		
 	}

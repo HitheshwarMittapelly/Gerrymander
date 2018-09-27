@@ -5,7 +5,7 @@ using UnityEngine;
 public class LineRendererScript : MonoBehaviour {
 
 	private LineRenderer lineRenderer;
-	private Vector3 initPos;
+	//private Vector3 initPos;
 	private List<Vector3> linePoints = new List<Vector3>();
 
 	int lineCount = 0;
@@ -20,7 +20,7 @@ public class LineRendererScript : MonoBehaviour {
 		if (linePoints == null) {
 			linePoints = new List<Vector3> ();
 			linePoints.Add (newPosition);
-			initPos = newPosition;
+			//initPos = newPosition;
 		}
 		linePoints.Add (newPosition);
 	}
