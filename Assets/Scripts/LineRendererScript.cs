@@ -52,6 +52,7 @@ public class LineRendererScript : MonoBehaviour {
             return;
         }
 		PolygonCollider2D polyCollider = new GameObject ("PolyCollider").AddComponent<PolygonCollider2D> ();
+        polyCollider.gameObject.tag = "PolyCollider";
 
 		//this.gameObject.AddComponent<PolygonCollider2D>();
 		//PolygonCollider2D polyCollider = this.gameObject.GetComponent<PolygonCollider2D> ();
@@ -89,10 +90,9 @@ public class LineRendererScript : MonoBehaviour {
             }
         }
         
-        Debug.Log("max pos : " + maxPosition);
+
         textPosition = (maxPosition + (linePoints[0])) * 0.5f;
-        Debug.Log("initPos : " + linePoints[0]);
-        Debug.Log("Text Position "+ textPosition);
+        
 		GameManagerScript.instance.lineColliders.Add (polyCollider.gameObject);
 
 

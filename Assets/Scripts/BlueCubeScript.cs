@@ -9,7 +9,7 @@ public class BlueCubeScript : MonoBehaviour {
 	public string infoAbtPlanet;
 	public string infoAbtFaction;
 	public string infoMiscellaneous;
-	public Image factionFigureHead;
+	public Sprite factionFigureHead;
 
 	
 	private GenericPanelScript genericPanelScriptInstance;
@@ -23,7 +23,8 @@ public class BlueCubeScript : MonoBehaviour {
 	{
 		infoAbtPlanet = "Write something here";
 		infoAbtFaction = "More here";
-		infoMiscellaneous = "Some More here";
+		infoMiscellaneous = "Some more here";
+        
 	}
 
 	void Update()

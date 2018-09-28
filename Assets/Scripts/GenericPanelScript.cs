@@ -25,13 +25,13 @@ public class GenericPanelScript : MonoBehaviour {
 
 	}
 
-	public void bringUpInfo(string infoAbtPlanet,string infoAbtFaction,string infoMiscellaneous,Image factionFigureHead)
+	public void bringUpInfo(string infoAbtPlanet,string infoAbtFaction,string infoMiscellaneous,Sprite factionFigureHead)
 	{
 		genericPanelObject.SetActive (true);
 		this.infoAbtPlanet.text = infoAbtPlanet;
 		this.infoAbtFaction.text = infoAbtFaction;
 		this.infoMiscellaneous.text = infoMiscellaneous;
-		this.factionFigureHead = factionFigureHead;
+		this.factionFigureHead.sprite = factionFigureHead;
 		okayButton.onClick.RemoveAllListeners ();
 		okayButton.onClick.AddListener (ClosePanel);
 

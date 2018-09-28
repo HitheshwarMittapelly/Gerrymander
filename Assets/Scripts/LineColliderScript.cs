@@ -7,6 +7,7 @@ public class LineColliderScript : MonoBehaviour {
 
 	private float blueCount = 0f;
 	private float redCount = 0f;
+    public bool isDestroyed = false;
 	private GameObject text ;
 	private GameManagerScript.WinStates winState;
 
@@ -21,6 +22,29 @@ public class LineColliderScript : MonoBehaviour {
 		{
 			redCount++;
 		}
+        if (collider.gameObject.GetComponent<LineColliderScript>())
+        {
+            //foreach(GameObject line in GameManagerScript.instance.lineColliders)
+            //{
+            //    if (this.gameObject == line)
+            //        GameManagerScript.instance.lineColliders.Remove(line);
+            //}
+            if (!isDestroyed)
+            {
+               
+                collider.gameObject.GetComponent<LineColliderScript>().isDestroyed = true;
+                Debug.Log("Destroying object : " + this.gameObject);
+                GameObject removeLine = null;
+                foreach (GameObject line in GameManagerScript.instance.lineColliders)
+                {
+                    if (this.gameObject == line)
+                       removeLine = line;
+                }
+                GameManagerScript.instance.lineColliders.Remove(removeLine);
+                Destroy(this.gameObject.transform.parent.gameObject);
+                
+            }
+        }
 
 	}
 
