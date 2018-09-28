@@ -7,7 +7,7 @@ public class LineRendererScript : MonoBehaviour {
 	private LineRenderer lineRenderer;
 	//private Vector3 initPos;
 	private List<Vector3> linePoints = new List<Vector3>();
-
+    public Vector3 textPosition;
 	int lineCount = 0;
 	void Awake()
 	{
@@ -38,11 +38,29 @@ public class LineRendererScript : MonoBehaviour {
 
 	public void AddColliderToLine()
 	{
+        bool isAtSamePlace = true;
+        for (int i = 1; i < linePoints.Count; i++)
+        {
+            if (Vector3.Distance(linePoints[1], linePoints[i-1]) != 0f)
+               isAtSamePlace = false;
 
+        }
+        if (isAtSamePlace)
+        {
+            
+            Destroy(gameObject);
+            return;
+        }
 		PolygonCollider2D polyCollider = new GameObject ("PolyCollider").AddComponent<PolygonCollider2D> ();
+
 		//this.gameObject.AddComponent<PolygonCollider2D>();
 		//PolygonCollider2D polyCollider = this.gameObject.GetComponent<PolygonCollider2D> ();
+		//lineRenderer.useWorldSpace = false;
+
+		//Uncomment from here
+		//polyCollider.transform.position = this.transform.position;
 		polyCollider.transform.parent = this.gameObject.transform;
+		polyCollider.transform.localPosition = Vector3.zero;
 		float zValue = this.gameObject.transform.position.z - polyCollider.transform.position.z;
 		polyCollider.transform.position = new Vector3 (polyCollider.transform.position.x, polyCollider.transform.position.y, zValue);
 		polyCollider.isTrigger = true;
@@ -53,20 +71,35 @@ public class LineRendererScript : MonoBehaviour {
 		List<Vector2> points = new List<Vector2> ();
 		for (int i = 0; i < linePoints.Count; i++) {
 
-			points.Add (new Vector2 (linePoints [i].x, linePoints [i].y));
+			points.Add ((new Vector2 (linePoints [i].x, linePoints [i].y)));
 		}
-
+		polyCollider.offset = new Vector2 (-points [0].x,-points[0].y);
 
 		polyCollider.points = points.ToArray ();
+        float max = 0.1f;
+        float distance;
+        Vector3 maxPosition = Vector3.zero;
+        for(int i = 1; i < linePoints.Count; i++)
+        {
+            distance = Vector3.Distance(linePoints[0], linePoints[i]);
+            if (distance > max)
+            {
+                max = distance;
+                maxPosition = linePoints[i];
+            }
+        }
+        
+        Debug.Log("max pos : " + maxPosition);
+        textPosition = (maxPosition + (linePoints[0])) * 0.5f;
+        Debug.Log("initPos : " + linePoints[0]);
+        Debug.Log("Text Position "+ textPosition);
+		GameManagerScript.instance.lineColliders.Add (polyCollider.gameObject);
+
 
 
 	}
 
 
-	void OnCollisionEnter2D(Collision2D collision)
-	{
-		Debug.Log ("collision occured with " + collision.gameObject);
-	}
 
 //	BoxCollider lineCollider = new GameObject("LineCollider").AddComponent<BoxCollider>();
 //	lineCollider.transform.parent = this.gameObject.transform;

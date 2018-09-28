@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73e3496ebb95a7947ab12783c3e61c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textPosition: {x: 0, y: 0, z: 0}
 --- !u!120 &120690074774845908
 LineRenderer:
   m_ObjectHideFlags: 1
