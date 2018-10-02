@@ -92,6 +92,7 @@ public class LineRendererScript : MonoBehaviour {
         
 
         textPosition = (maxPosition + (linePoints[0])) * 0.5f;
+        textPosition.z = -1f;
         
 		GameManagerScript.instance.lineColliders.Add (polyCollider.gameObject);
 

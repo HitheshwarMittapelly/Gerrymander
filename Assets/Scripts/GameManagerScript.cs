@@ -9,7 +9,7 @@ public class GameManagerScript : MonoBehaviour {
 
 	public static GameManagerScript instance = null;
 
-	public enum WinStates {RED,BLUE,NEUTRAL,NONE};
+	public enum WinStates {WIN,LOSE,NONE,NEUTRAL};
 	public List<GameObject> lineColliders = new List<GameObject> ();
 
 	private List<WinStates> calculatedWinStates = new List<WinStates>();

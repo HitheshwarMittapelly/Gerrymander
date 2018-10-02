@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class BlueCubeScript : MonoBehaviour {
+public class PlanetScript : MonoBehaviour {
 
 	public string infoAbtPlanet;
 	public string infoAbtFaction;

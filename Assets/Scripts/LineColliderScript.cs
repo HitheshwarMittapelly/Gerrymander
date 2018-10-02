@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class LineColliderScript : MonoBehaviour {
 
-	private float blueCount = 0f;
-	private float redCount = 0f;
+	private float pinkMediumCount = 0f;
+	private float greenMediumCount = 0f;
+    private float orangeMediumCount = 0f;
     public bool isDestroyed = false;
 	private GameObject text ;
 	private GameManagerScript.WinStates winState;
@@ -14,14 +15,18 @@ public class LineColliderScript : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D collider)
 	{
 		
-		if (collider.gameObject.CompareTag ("Blue")) 
+		if (collider.gameObject.CompareTag ("PinkMedium")) 
 		{
-			blueCount++;
+			pinkMediumCount++;
 		}
-		if (collider.gameObject.CompareTag ("Red"))
+		if (collider.gameObject.CompareTag ("GreenMedium"))
 		{
-			redCount++;
+			greenMediumCount++;
 		}
+        if (collider.gameObject.CompareTag("OrangeMedium"))
+        {
+            greenMediumCount++;
+        }
         if (collider.gameObject.GetComponent<LineColliderScript>())
         {
             //foreach(GameObject line in GameManagerScript.instance.lineColliders)
@@ -56,16 +61,18 @@ public class LineColliderScript : MonoBehaviour {
 
 	public GameManagerScript.WinStates calculatePercentage()
 	{
-		
-			float percentage = blueCount / (blueCount + redCount);
+        float equality =  1f/(pinkMediumCount + greenMediumCount + orangeMediumCount);
 
-			Debug.Log ("blue percentage = " + percentage);
-			if (percentage > 0.5f) 
+        float percentage = pinkMediumCount / (pinkMediumCount + greenMediumCount + orangeMediumCount);
+           
+
+			//Debug.Log ("blue percentage = " + percentage);
+			if (percentage > equality) 
 			{
-				winState = GameManagerScript.WinStates.BLUE;
-				Debug.Log ("Blue wins");
+				winState = GameManagerScript.WinStates.WIN;
+				Debug.Log ("You win");
 			}
-			else if (percentage == 0.5f)
+			else if (percentage == equality)
 			{
 				winState = GameManagerScript.WinStates.NEUTRAL;
 				Debug.Log ("It's a tie");
@@ -78,8 +85,8 @@ public class LineColliderScript : MonoBehaviour {
 			else 
 			{
 			
-				winState = GameManagerScript.WinStates.RED;
-				Debug.Log ("Red wins");
+				winState = GameManagerScript.WinStates.LOSE;
+				Debug.Log ("you lose");
 			}
 
 		text = new GameObject();
