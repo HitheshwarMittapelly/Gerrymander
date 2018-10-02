@@ -71,7 +71,7 @@ MonoBehaviour:
   infoAbtPlanet: 
   infoAbtFaction: 
   infoMiscellaneous: 
-  factionFigureHead: {fileID: 0}
+  factionFigureHead: {fileID: 21300000, guid: f9f64a64fbb1a5044bdba84dee8a9e04, type: 3}
 --- !u!212 &212401456129974818
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -11,6 +11,7 @@ public class LineColliderScript : MonoBehaviour {
     public bool isDestroyed = false;
 	private GameObject text ;
 	private GameManagerScript.WinStates winState;
+    public bool isCalculated = false;
 
 	void OnTriggerEnter2D(Collider2D collider)
 	{
@@ -21,7 +22,7 @@ public class LineColliderScript : MonoBehaviour {
 		}
 		if (collider.gameObject.CompareTag ("GreenMedium"))
 		{
-			greenMediumCount++;
+			orangeMediumCount++;
 		}
         if (collider.gameObject.CompareTag("OrangeMedium"))
         {
@@ -61,43 +62,54 @@ public class LineColliderScript : MonoBehaviour {
 
 	public GameManagerScript.WinStates calculatePercentage()
 	{
-        float equality =  1f/(pinkMediumCount + greenMediumCount + orangeMediumCount);
+        isCalculated = true;
+        float totalCount = pinkMediumCount + orangeMediumCount + greenMediumCount;
+        winState = GameManagerScript.WinStates.NONE;
 
-        float percentage = pinkMediumCount / (pinkMediumCount + greenMediumCount + orangeMediumCount);
-           
+        if (totalCount > 2)
+        {
+            if (pinkMediumCount > orangeMediumCount && pinkMediumCount > greenMediumCount)
+            {
+                winState = GameManagerScript.WinStates.WIN;
+                //Debug.Log ("You win");
+            }
+            else if (pinkMediumCount == 0f && orangeMediumCount == 0 && greenMediumCount == 0)
+            {
+                winState = GameManagerScript.WinStates.NONE;
+                //Debug.Log ("Try again");
+            }
+            else if (pinkMediumCount == orangeMediumCount && pinkMediumCount == greenMediumCount)
+            {
+                winState = GameManagerScript.WinStates.NEUTRAL;
+                //Debug.Log ("It's a tie");
+            }
 
-			//Debug.Log ("blue percentage = " + percentage);
-			if (percentage > equality) 
-			{
-				winState = GameManagerScript.WinStates.WIN;
-				Debug.Log ("You win");
-			}
-			else if (percentage == equality)
-			{
-				winState = GameManagerScript.WinStates.NEUTRAL;
-				Debug.Log ("It's a tie");
-			}
-		else if (float.IsNaN(percentage)) 
-			{
-				winState = GameManagerScript.WinStates.NONE;
-				Debug.Log ("Try again");
-			} 
-			else 
-			{
-			
-				winState = GameManagerScript.WinStates.LOSE;
-				Debug.Log ("you lose");
-			}
+            else
+            {
 
-		text = new GameObject();
-		text.transform.position = this.transform.parent.GetComponent<LineRendererScript>().textPosition;
-		text.AddComponent<TextMesh> ();
-		text.GetComponent<TextMesh> ().color = Color.red;
-		text.GetComponent<TextMesh>().text = winState.ToString();
+                winState = GameManagerScript.WinStates.LOSE;
+                //Debug.Log ("you lose");
+            }
+        }
 
-		Destroy (text, 5f);
+		//text = new GameObject();
+		//text.transform.position = this.transform.parent.GetComponent<LineRendererScript>().textPosition;
+		//text.AddComponent<TextMesh> ();
+		//text.GetComponent<TextMesh> ().color = Color.red;
+		//text.GetComponent<TextMesh>().text = winState.ToString();
+
+		//Destroy (text, 5f);
 		return winState;
 	}
+    //pinkPlanetPositions.Add(new Vector3(0.1f, 0.9f, 0));
+    //    pinkPlanetPositions.Add(new Vector3(0.9f, 0.1f, 0));
+    //    pinkPlanetPositions.Add(new Vector3(0.6f, 0.75f, 0));
+    //    orangePlanetPositions.Add(new Vector3(0.25f, 0.55f, 0));
+    //    orangePlanetPositions.Add(new Vector3(0.7f, 0.4f, 0));
+    //    orangePlanetPositions.Add(new Vector3(0.75f,0.3f, 0));
+    //    greenPlanetPositions.Add(new Vector3(0.4f, 0.6f, 0));
+    //    greenPlanetPositions.Add(new Vector3(0.3f, 0.2f, 0));
+    //    greenPlanetPositions.Add(new Vector3(0.8f, 0.8f, 0));
 
 
 
