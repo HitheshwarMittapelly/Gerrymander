@@ -24,13 +24,21 @@ public class GameManagerScript : MonoBehaviour {
     private bool gameWin = false;
     private int minNumOfDistricts = 2;
 
+    private List<GameObject> activeLines = new List<GameObject>();
+    private List<GameObject> calculatedLines=new List<GameObject>();
+    public enum GameStates { OBJECTIVEONE,OBJECTIVETWO,NONE};
+    public GameStates gameState = GameStates.NONE;
+
+
+    private float totalCount = 0f;
+
 	void Awake()
 	{
 		if (instance == null)
 			instance = this;
 		else if (instance != this)
 			Destroy (gameObject);
-
+        gameState = GameStates.NONE;
         pinkPlanetPositions.Add(new Vector3(0.1f, 0.9f, 118f));
         pinkPlanetPositions.Add(new Vector3(0.9f, 0.1f, 118f));
         pinkPlanetPositions.Add(new Vector3(0.6f, 0.75f, 118f));
@@ -73,50 +81,109 @@ public class GameManagerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		if (Input.GetKeyDown (KeyCode.Space)) {
-            
-                foreach (GameObject line in lineColliders)
-                {
-                     if (!line.GetComponent<LineColliderScript>().isCalculated)
-                     {
-                        WinStates getState = line.GetComponent<LineColliderScript>().calculatePercentage();
+        if (gameState == GameStates.OBJECTIVEONE)
+        {
 
-                         calculatedWinStates.Add(getState);
-                      }
-                }
-            Debug.Log(calculatedWinStates.Count + " count");
-            if (calculatedWinStates.Count > minNumOfDistricts)
+            getActiveLines();
+            //Debug.Log(activeLines.Count);
+            if (activeLines.Count == 4)
             {
-                foreach (WinStates state in calculatedWinStates)
-                {
-                    if (state == WinStates.WIN)
-                        gameWin = true;
-                }
-
-                if (gameWin)
-                {
-                    Debug.Log("You won the game");
-                    text = new GameObject();
-                    text.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.5f,0.5f,117f));
-                    text.AddComponent<TextMesh>();
-                    text.GetComponent<TextMesh>().color = Color.red;
-                    text.GetComponent<TextMesh>().text = "You Won";
-
-                    Destroy(text, 5f);
-                }
-                else
-                    Debug.Log("You lose");
+                Debug.Log(activeLines.Count);
+                Debug.Log("Yayyyyy");
             }
-		}
+            //getActiveLines();
 
+            //if (activeLines.Count == 4)
+            //{
+            //    Debug.Log("Got here yayyyy");
+            //    //Debug.Log(calculatedWinStates.Count + " count");
+            //    //if (calculatedWinStates.Count > minNumOfDistricts)
+            //    //{
+            //    //    foreach (WinStates state in calculatedWinStates)
+            //    //    {
+            //    //        if (state == WinStates.WIN)
+            //    //        {
+            //    //            gameWin = true;
+            //    //        }
+            //    //    }
+
+            //    //    if (gameWin)
+            //    //    {
+            //    //        Debug.Log("You won the game");
+            //    //        text = new GameObject();
+            //    //        text.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 117f));
+            //    //        text.AddComponent<TextMesh>();
+            //    //        text.GetComponent<TextMesh>().color = Color.red;
+            //    //        text.GetComponent<TextMesh>().text = "You Won";
+
+            //    //        Destroy(text, 5f);
+            //    //    }
+            //    //    else
+            //    //        Debug.Log("You lose");
+            //    //}
+            //}
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Log("states" + calculatedWinStates.Count);
+                Debug.Log("lines " + calculatedLines.Count);
+               
+                //foreach (GameObject line in lineColliders)
+                //{
+                //    Debug.Log(line.GetComponent<LineColliderScript>().totalCount);
+                //    //Debug.Log(activeLines.Count+" lines");
+                //    //Debug.Log(totalCount);
+                //    Debug.Log(calculatedWinStates.Count+" states");
+                //}
+            }
+        }
+        
+
+    }
+
+    void getActiveLines()
+    {
+        foreach (GameObject line in lineColliders)
+        {
+            if (!line.GetComponent<LineColliderScript>().isCalculated)
+            {
+                WinStates getState = line.GetComponent<LineColliderScript>().calculatePercentage();
+                //if (getState != WinStates.NONE)
+                    calculatedWinStates.Add(getState);
+                    calculatedLines.Add(line);
+              
+                //calculatedWinStates.Add(getState);
+                // totalCount = line.GetComponent<LineColliderScript>().totalCount;
+                //if (line.GetComponent<LineColliderScript>().totalCount >= 2f)
+                //{
+                //    Debug.Log("Am i ever here");
+                //    calculatedWinStates.Add(getState);
+                //    activeLines.Add(line);
+                //}
+            }
+        }
+        if(calculatedLines.Count>=2)
+            getFromStates();
+       
+    }
+
+    void getFromStates()
+    {
+        foreach(GameObject line in calculatedLines)
+        {
+            if(line.GetComponent<LineColliderScript>().totalCount>=2f)
+                activeLines.Add(line);
+        }
+       
     }
     public void startObjectiveOne()
     {
-        Instantiate(minDistricts, Camera.main.ViewportToWorldPoint(new Vector3(0.87f, 0.98f, 117f)), Quaternion.identity);
+        Instantiate(minDistricts, Camera.main.ViewportToWorldPoint(new Vector3(0.85f, 0.98f, 117f)), Quaternion.identity);
         //minDistricts.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.85f, 0.98f, 117f));
 
 
         minDistricts.GetComponent<TextMesh>().text = "Min Districts = " + minNumOfDistricts;
+        gameState = GameStates.OBJECTIVEONE;
+      
 
         foreach (Vector3 pos in pinkPlanetPositions)
         {
@@ -135,6 +202,11 @@ public class GameManagerScript : MonoBehaviour {
             Instantiate(greenPlanet, Camera.main.ViewportToWorldPoint(pos), Quaternion.identity);
         }
         Map.GetComponent<MapScript>().canDraw = true;
+    }
+
+   public  void startObjectiveTwo()
+    {
+        gameState = GameStates.OBJECTIVETWO;
     }
 }
 

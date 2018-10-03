@@ -11,7 +11,7 @@ public class PlanetScript : MonoBehaviour {
 	public string infoMiscellaneous;
 	public Sprite factionFigureHead;
 
-	
+  
 	private GenericPanelScript genericPanelScriptInstance;
 
 	void Awake()
@@ -29,22 +29,25 @@ public class PlanetScript : MonoBehaviour {
 
 	void Update()
 	{
-		if (Input.GetMouseButtonDown (0))
-		{
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            RaycastHit2D hit2D = Physics2D.GetRayIntersection(ray);
-
-
-            if (hit2D.collider != null)
+        if (genericPanelScriptInstance.gameObject.GetComponent<GameManagerScript>().Map.GetComponent<MapScript>().canDraw)
+        {
+            if (Input.GetMouseButtonDown(0))
             {
-                if (hit2D.collider.gameObject == this.gameObject)
-                    popInfo();
-            
+
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                RaycastHit2D hit2D = Physics2D.GetRayIntersection(ray);
+
+
+                if (hit2D.collider != null)
+                {
+                    if (hit2D.collider.gameObject == this.gameObject)
+                        popInfo();
+
+                }
+
             }
-               
-  		}
+        }
 	}
 	public void popInfo()
 	{

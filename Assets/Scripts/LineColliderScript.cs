@@ -12,21 +12,26 @@ public class LineColliderScript : MonoBehaviour {
 	private GameObject text ;
 	private GameManagerScript.WinStates winState;
     public bool isCalculated = false;
+    public int totalCount = 0;
 
-	void OnTriggerEnter2D(Collider2D collider)
+
+    void OnTriggerEnter2D(Collider2D collider)
 	{
 		
 		if (collider.gameObject.CompareTag ("PinkMedium")) 
 		{
 			pinkMediumCount++;
+            totalCount++;
 		}
 		if (collider.gameObject.CompareTag ("GreenMedium"))
 		{
 			orangeMediumCount++;
+            totalCount++;
 		}
         if (collider.gameObject.CompareTag("OrangeMedium"))
         {
             greenMediumCount++;
+            totalCount++;
         }
         if (collider.gameObject.GetComponent<LineColliderScript>())
         {
@@ -62,22 +67,19 @@ public class LineColliderScript : MonoBehaviour {
 
 	public GameManagerScript.WinStates calculatePercentage()
 	{
+
         isCalculated = true;
-        float totalCount = pinkMediumCount + orangeMediumCount + greenMediumCount;
         winState = GameManagerScript.WinStates.NONE;
 
         if (totalCount > 2)
         {
+           
             if (pinkMediumCount > orangeMediumCount && pinkMediumCount > greenMediumCount)
             {
                 winState = GameManagerScript.WinStates.WIN;
                 //Debug.Log ("You win");
             }
-            else if (pinkMediumCount == 0f && orangeMediumCount == 0 && greenMediumCount == 0)
-            {
-                winState = GameManagerScript.WinStates.NONE;
-                //Debug.Log ("Try again");
-            }
+            
             else if (pinkMediumCount == orangeMediumCount && pinkMediumCount == greenMediumCount)
             {
                 winState = GameManagerScript.WinStates.NEUTRAL;
@@ -100,7 +102,7 @@ public class LineColliderScript : MonoBehaviour {
 
 		//Destroy (text, 5f);
 		return winState;
-	}
+    }
     //pinkPlanetPositions.Add(new Vector3(0.1f, 0.9f, 0));
     //    pinkPlanetPositions.Add(new Vector3(0.9f, 0.1f, 0));
     //    pinkPlanetPositions.Add(new Vector3(0.6f, 0.75f, 0));
@@ -110,6 +112,11 @@ public class LineColliderScript : MonoBehaviour {
     //    greenPlanetPositions.Add(new Vector3(0.4f, 0.6f, 0));
     //    greenPlanetPositions.Add(new Vector3(0.3f, 0.2f, 0));
     //    greenPlanetPositions.Add(new Vector3(0.8f, 0.8f, 0));
+    //else if (pinkMediumCount == 0f && orangeMediumCount == 0 && greenMediumCount == 0)
+    //        {
+    //            winState = GameManagerScript.WinStates.NONE;
+    //            //Debug.Log ("Try again");
+    //        }
 
 
 
