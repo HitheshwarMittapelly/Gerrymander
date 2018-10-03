@@ -10,12 +10,24 @@ public class GenericPanelScript : MonoBehaviour {
 	public Text infoAbtFaction;
 	public Text infoMiscellaneous;
 	public Image factionFigureHead;
+
 	public Button okayButton;
+    public Button startButton;
+    public Button objectiveOkayButton;
+
 	public GameObject genericPanelObject;
+    public GameObject startGamePanel;
+    public GameObject objectivePanel1;
+    public GameObject objectivePanel2;
 
 	private static GenericPanelScript genericPanelScript;
 
-	public static GenericPanelScript Instance()
+    private void Start()
+    {
+        bringUpStartMenu();
+    }
+
+    public static GenericPanelScript Instance()
 	{
 		if (!genericPanelScript) {
 			genericPanelScript = FindObjectOfType (typeof(GenericPanelScript)) as GenericPanelScript;
@@ -33,14 +45,39 @@ public class GenericPanelScript : MonoBehaviour {
 		this.infoMiscellaneous.text = infoMiscellaneous;
 		this.factionFigureHead.sprite = factionFigureHead;
 		okayButton.onClick.RemoveAllListeners ();
-		okayButton.onClick.AddListener (ClosePanel);
+		okayButton.onClick.AddListener (closeGenericPanel);
+       
 
 		okayButton.gameObject.SetActive (true);
 	}
+    public void bringUpStartMenu()
+    {
+        startGamePanel.SetActive(true);
+        startButton.onClick.RemoveAllListeners();
+        startButton.onClick.AddListener(closeStartMenu);
+        
 
-	void ClosePanel()
+    }
+	void closeGenericPanel()
 	{
 		genericPanelObject.SetActive (false);
 	}
+    void closeStartMenu()
+    {
+        startGamePanel.SetActive(false);
+        bringUpObjective1();
+    }
+    public void bringUpObjective1()
+    {
+        objectivePanel1.SetActive(true);
+        objectiveOkayButton.onClick.RemoveAllListeners();
+        objectiveOkayButton.onClick.AddListener(startObjective1);
+
+    }
+    void startObjective1()
+    {
+        objectivePanel1.SetActive(false);
+        this.GetComponent<GameManagerScript>().startObjectiveOne();
+    }
 
 }

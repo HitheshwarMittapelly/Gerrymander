@@ -11,6 +11,8 @@ public class MapScript : MonoBehaviour {
 
 	private GameObject lineInstance;
 
+    public bool canDraw = false;
+
     private float minX, maxX, minY, maxY;
     // Use this for initialization
 
@@ -31,67 +33,70 @@ public class MapScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        //if (Input.touchCount == 1) {
-        if (Input.GetMouseButtonDown(0))
+        if (canDraw)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
-            if (Physics.Raycast(ray, out hitInfo, 200f, mask.value))
+            //if (Input.touchCount == 1) {
+            if (Input.GetMouseButtonDown(0))
             {
-                if (hitInfo.collider.gameObject == this.gameObject)
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hitInfo;
+                if (Physics.Raycast(ray, out hitInfo, 200f, mask.value))
                 {
-                    lineInstance = Instantiate(line, hitInfo.point + Vector3.up * 0.1f, Quaternion.identity, transform);
+                    if (hitInfo.collider.gameObject == this.gameObject)
+                    {
+                        lineInstance = Instantiate(line, hitInfo.point + Vector3.up * 0.1f, Quaternion.identity, transform);
 
-                    initPos = hitInfo.point + Vector3.up * 0.1f;
-                    // Horizontal contraint
-                    if (initPos.x < minX) initPos.x = minX;
-                    if (initPos.x > maxX) initPos.x = maxX;
+                        initPos = hitInfo.point + Vector3.up * 0.1f;
+                        // Horizontal contraint
+                        if (initPos.x < minX) initPos.x = minX;
+                        if (initPos.x > maxX) initPos.x = maxX;
 
-                    // vertical contraint
-                    if (initPos.y < minY) initPos.y = minY;
-                    if (initPos.y > maxY) initPos.y = maxY;
+                        // vertical contraint
+                        if (initPos.y < minY) initPos.y = minY;
+                        if (initPos.y > maxY) initPos.y = maxY;
 
-                    lineInstance.GetComponent<LineRendererScript>().addToList(initPos);
+                        lineInstance.GetComponent<LineRendererScript>().addToList(initPos);
+                    }
+
                 }
 
+
             }
-
-
-        }
-        if (Input.GetMouseButton(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
-            if (Physics.Raycast(ray, out hitInfo))
+            if (Input.GetMouseButton(0))
             {
-                if (hitInfo.collider.gameObject == this.gameObject)
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hitInfo;
+                if (Physics.Raycast(ray, out hitInfo))
                 {
-                    
+                    if (hitInfo.collider.gameObject == this.gameObject)
+                    {
+
 
 
                         Vector3 hitPosition = hitInfo.point + Vector3.up * 0.1f;
-                    // Horizontal contraint
-                    if (hitPosition.x < minX) hitPosition.x = minX;
-                    if (hitPosition.x > maxX) hitPosition.x = maxX;
+                        // Horizontal contraint
+                        if (hitPosition.x < minX) hitPosition.x = minX;
+                        if (hitPosition.x > maxX) hitPosition.x = maxX;
 
-                    // vertical contraint
-                    if (hitPosition.y < minY) hitPosition.y = minY;
-                    if (hitPosition.y > maxY) hitPosition.y = maxY;
+                        // vertical contraint
+                        if (hitPosition.y < minY) hitPosition.y = minY;
+                        if (hitPosition.y > maxY) hitPosition.y = maxY;
 
-                    lineInstance.GetComponent<LineRendererScript>().addToList(hitPosition);
+                        lineInstance.GetComponent<LineRendererScript>().addToList(hitPosition);
 
 
                         UpdateLine();
-                    
+
+                    }
                 }
             }
-        }
-        if (Input.GetMouseButtonUp(0) && lineInstance)
-        {
+            if (Input.GetMouseButtonUp(0) && lineInstance)
+            {
 
-            lineInstance.GetComponent<LineRendererScript>().AddColliderToLine();
+                lineInstance.GetComponent<LineRendererScript>().AddColliderToLine();
 
-            //lineInstance = null;
+                //lineInstance = null;
+            }
         }
 
         //}

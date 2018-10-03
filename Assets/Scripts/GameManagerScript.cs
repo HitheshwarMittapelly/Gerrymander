@@ -13,6 +13,7 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject greenPlanet;
     private GameObject text;
     public GameObject minDistricts;
+    public GameObject Map;
     public enum WinStates {WIN,LOSE,NONE,NEUTRAL};
 	public List<GameObject> lineColliders = new List<GameObject> ();
 
@@ -43,28 +44,28 @@ public class GameManagerScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-        Instantiate(minDistricts, Camera.main.ViewportToWorldPoint(new Vector3(0.87f, 0.98f, 117f)),Quaternion.identity);
-        //minDistricts.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.85f, 0.98f, 117f));
+        //Instantiate(minDistricts, Camera.main.ViewportToWorldPoint(new Vector3(0.87f, 0.98f, 117f)),Quaternion.identity);
+        ////minDistricts.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.85f, 0.98f, 117f));
        
 
-        minDistricts.GetComponent<TextMesh>().text = "Min Districts = "+ minNumOfDistricts;
+        //minDistricts.GetComponent<TextMesh>().text = "Min Districts = "+ minNumOfDistricts;
 
-        foreach (Vector3 pos in pinkPlanetPositions)
-        {
-             //Instantiate(pinkPlanet, pos, Quaternion.identity);
-            Instantiate(pinkPlanet, Camera.main.ViewportToWorldPoint(pos), Quaternion.identity);
-        }
-        foreach (Vector3 pos in orangePlanetPositions)
-        {
-            //Instantiate(orangePlanet, pos, Quaternion.identity);
-            Instantiate(orangePlanet, Camera.main.ViewportToWorldPoint(pos), Quaternion.identity);
-        }
+        //foreach (Vector3 pos in pinkPlanetPositions)
+        //{
+        //     //Instantiate(pinkPlanet, pos, Quaternion.identity);
+        //    Instantiate(pinkPlanet, Camera.main.ViewportToWorldPoint(pos), Quaternion.identity);
+        //}
+        //foreach (Vector3 pos in orangePlanetPositions)
+        //{
+        //    //Instantiate(orangePlanet, pos, Quaternion.identity);
+        //    Instantiate(orangePlanet, Camera.main.ViewportToWorldPoint(pos), Quaternion.identity);
+        //}
 
-        foreach (Vector3 pos in greenPlanetPositions)
-        {
-            //Instantiate(greenPlanet, pos, Quaternion.identity);
-            Instantiate(greenPlanet, Camera.main.ViewportToWorldPoint(pos), Quaternion.identity);
-        }
+        //foreach (Vector3 pos in greenPlanetPositions)
+        //{
+        //    //Instantiate(greenPlanet, pos, Quaternion.identity);
+        //    Instantiate(greenPlanet, Camera.main.ViewportToWorldPoint(pos), Quaternion.identity);
+        //}
 
 
     }
@@ -108,6 +109,32 @@ public class GameManagerScript : MonoBehaviour {
             }
 		}
 
+    }
+    public void startObjectiveOne()
+    {
+        Instantiate(minDistricts, Camera.main.ViewportToWorldPoint(new Vector3(0.87f, 0.98f, 117f)), Quaternion.identity);
+        //minDistricts.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.85f, 0.98f, 117f));
+
+
+        minDistricts.GetComponent<TextMesh>().text = "Min Districts = " + minNumOfDistricts;
+
+        foreach (Vector3 pos in pinkPlanetPositions)
+        {
+            //Instantiate(pinkPlanet, pos, Quaternion.identity);
+            Instantiate(pinkPlanet, Camera.main.ViewportToWorldPoint(pos), Quaternion.identity);
+        }
+        foreach (Vector3 pos in orangePlanetPositions)
+        {
+            //Instantiate(orangePlanet, pos, Quaternion.identity);
+            Instantiate(orangePlanet, Camera.main.ViewportToWorldPoint(pos), Quaternion.identity);
+        }
+
+        foreach (Vector3 pos in greenPlanetPositions)
+        {
+            //Instantiate(greenPlanet, pos, Quaternion.identity);
+            Instantiate(greenPlanet, Camera.main.ViewportToWorldPoint(pos), Quaternion.identity);
+        }
+        Map.GetComponent<MapScript>().canDraw = true;
     }
 }
 
