@@ -461,7 +461,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 465538460656a7b4d8d1e0071f421238, type: 2}
+  - {fileID: 2100000, guid: d8527a7f328614e4bbd6781c06040407, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3655,7 +3655,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 883e2cda1131e684ca4a925db050dd4f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 28706bc503617c14eaea2caed3115321, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

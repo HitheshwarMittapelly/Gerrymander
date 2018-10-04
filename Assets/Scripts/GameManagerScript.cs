@@ -57,13 +57,13 @@ public class GameManagerScript : MonoBehaviour {
 			Destroy (gameObject);
         gameState = GameStates.NONE;
         SLF_HPositions.Add(new Vector3(0.1f, 0.7f, 118f));
-        SLF_HPositions.Add(new Vector3(0.5f, 0.1f, 118f));
+        SLF_HPositions.Add(new Vector3(0.7f, 0.1f, 118f));
         SLF_HPositions.Add(new Vector3(0.3f, 0.1f, 118f));
-        SLF_HPositions.Add(new Vector3(0.3f, 0.4f, 118f));
+        SLF_HPositions.Add(new Vector3(0.3f, 0.5f, 118f));
 
         GPP_HPositions.Add(new Vector3(0.45f, 0.85f, 118f));
         GPP_HPositions.Add(new Vector3(0.2f, 0.6f, 118f));
-        GPP_HPositions.Add(new Vector3(0.6f, 0.4f, 118f));
+        GPP_HPositions.Add(new Vector3(0.4f, 0.7f, 118f));
 
         SLF_PPositions.Add(new Vector3(0.3f, 0.8f, 118f));
         SLF_PPositions.Add(new Vector3(0.7f, 0.9f, 118f));
@@ -123,7 +123,7 @@ public class GameManagerScript : MonoBehaviour {
             Instantiate(GPP_G, Camera.main.ViewportToWorldPoint(pos), Quaternion.identity);
         }
 
-        Instantiate(GPP_P, Camera.main.ViewportToWorldPoint(new Vector3(0.3f, 0.2f, 118f)),Quaternion.identity);
+        Instantiate(GPP_P, Camera.main.ViewportToWorldPoint(new Vector3(0.3f, 0.35f, 118f)),Quaternion.identity);
         //Instantiate(minDistricts, Camera.main.ViewportToWorldPoint(new Vector3(0.87f, 0.98f, 117f)),Quaternion.identity);
         ////minDistricts.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.85f, 0.98f, 117f));
 
