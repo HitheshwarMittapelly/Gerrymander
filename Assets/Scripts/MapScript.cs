@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//This script is attached to the background quad which is a galaxy map.
+//This script uses raycast to determine the points to draw the lines.
+//The touch points are updated everyframe to the line renderer script
+
 public class MapScript : MonoBehaviour {
 
 	public GameObject line;
@@ -47,7 +52,8 @@ public class MapScript : MonoBehaviour {
                         lineInstance = Instantiate(line, hitInfo.point + Vector3.up * 0.1f, Quaternion.identity, transform);
 
                         initPos = hitInfo.point + Vector3.up * 0.1f;
-                        // Horizontal contraint
+
+                        // Horizontal contraint (clamping out of bounds line drawing)
                         if (initPos.x < minX) initPos.x = minX;
                         if (initPos.x > maxX) initPos.x = maxX;
 
@@ -62,6 +68,7 @@ public class MapScript : MonoBehaviour {
 
 
             }
+            //stack up the points as long as the finger is down and dragging
             if (Input.GetMouseButton(0))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -92,22 +99,24 @@ public class MapScript : MonoBehaviour {
             }
             if (Input.GetMouseButtonUp(0) && lineInstance)
             {
-
+                //when u release the finger add a collider to the line
                 lineInstance.GetComponent<LineRendererScript>().AddColliderToLine();
+                //checking whether lines drawn are equal to 4 (lines = num of districts)
+                //if yes call the respective functions for objective one and two
                 if (GameManagerScript.instance.lineColliders.Count >= 4)
                 {
-                    //Debug.Log("count greater than 2");
+                   
                     if (GameManagerScript.instance.gameState == GameManagerScript.GameStates.OBJECTIVEONE)
                         Invoke("doThis", 2f);
                     else if (GameManagerScript.instance.gameState == GameManagerScript.GameStates.OBJECTIVETWO)
                         Invoke("doThat", 2f);
                 }
 
-                //lineInstance = null;
+                
             }
         }
 
-        //}
+    
     }
     void UpdateLine()
 	{
@@ -116,6 +125,8 @@ public class MapScript : MonoBehaviour {
 
 
 	}
+
+    //calls Gamemanagerscript getActiveLines function
     void doThis()
     {
         GameManagerScript.instance.getActiveLines();

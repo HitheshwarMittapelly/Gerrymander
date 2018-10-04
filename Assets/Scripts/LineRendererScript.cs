@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This script draws the line using LineRenderer object
 public class LineRendererScript : MonoBehaviour {
 
 	private LineRenderer lineRenderer;
-	//private Vector3 initPos;
+	
 	private List<Vector3> linePoints = new List<Vector3>();
-    public Vector3 textPosition;
+
 	int lineCount = 0;
 	void Awake()
 	{
@@ -20,24 +21,28 @@ public class LineRendererScript : MonoBehaviour {
 		if (linePoints == null) {
 			linePoints = new List<Vector3> ();
 			linePoints.Add (newPosition);
-			//initPos = newPosition;
+			
 		}
 		linePoints.Add (newPosition);
 	}
+
+    //Update the line with the new points added
 	public void UpdateLine()
 	{
 		lineRenderer.positionCount = linePoints.Count;
 
 		for(int i = lineCount; i < linePoints.Count; i++)
 		{
-			//lineInstance.GetComponent<LineRenderer>().SetPosition(i, linePoints[i]);
+			
 			lineRenderer.SetPosition(i, linePoints[i]);
 		}
 		lineCount = linePoints.Count;
 	}
 
+    //Attach a Poly collider to check collision with planet objects
 	public void AddColliderToLine()
 	{
+        //if user holds down the finger at the same position.. no line is drawn
         bool isAtSamePlace = true;
         for (int i = 1; i < linePoints.Count; i++)
         {
@@ -51,15 +56,12 @@ public class LineRendererScript : MonoBehaviour {
             Destroy(gameObject);
             return;
         }
+
+        //stuff with the collider. Collider is attached to a child object of the line
 		PolygonCollider2D polyCollider = new GameObject ("PolyCollider").AddComponent<PolygonCollider2D> ();
         polyCollider.gameObject.tag = "PolyCollider";
 
-		//this.gameObject.AddComponent<PolygonCollider2D>();
-		//PolygonCollider2D polyCollider = this.gameObject.GetComponent<PolygonCollider2D> ();
-		//lineRenderer.useWorldSpace = false;
-
-		//Uncomment from here
-		//polyCollider.transform.position = this.transform.position;
+		
 		polyCollider.transform.parent = this.gameObject.transform;
 		polyCollider.transform.localPosition = Vector3.zero;
 		float zValue = this.gameObject.transform.position.z - polyCollider.transform.position.z;
@@ -76,65 +78,14 @@ public class LineRendererScript : MonoBehaviour {
 		}
 		polyCollider.offset = new Vector2 (-points [0].x,-points[0].y);
 
-		polyCollider.points = points.ToArray ();
-        float max = 0.1f;
-        float distance;
-        Vector3 maxPosition = Vector3.zero;
-        for(int i = 1; i < linePoints.Count; i++)
-        {
-            distance = Vector3.Distance(linePoints[0], linePoints[i]);
-            if (distance > max)
-            {
-                max = distance;
-                maxPosition = linePoints[i];
-            }
-        }
-        
-
-        textPosition = (maxPosition + (linePoints[0])) * 0.5f;
-        textPosition.z = 3f;
-        
-		GameManagerScript.instance.lineColliders.Add (polyCollider.gameObject);
-        //Debug.Log("adding line");
-        
-        
-            
+		polyCollider.points = points.ToArray ();        //This sets the poly collider 
         
        
-
-
-
+        //Add the newly added line game object to a List in GameManager
+		GameManagerScript.instance.lineColliders.Add (polyCollider.gameObject);
+           
     }
    
 
-
-//	BoxCollider lineCollider = new GameObject("LineCollider").AddComponent<BoxCollider>();
-//	lineCollider.transform.parent = this.gameObject.transform;
-//	float lineWidth = lineRenderer.endWidth;
-//	float max = 1f;
-//	Vector3 maxPoint = initPos;
-//	foreach (Vector3 p in linePoints) 
-//	{
-//		float distance = Vector3.Distance (initPos, p);
-//		if (distance > max) {
-//			max = distance;
-//			maxPoint = p;
-//		}
-//
-//	}
-//	float lineLength = max;
-//	lineCollider.size = new Vector3 (lineLength, lineWidth, 1f);
-//	Vector3 midpoint = (initPos + maxPoint) / 2;
-//
-//	lineCollider.transform.position = midpoint;
-//	Debug.Log ("midpoint = " + midpoint);
-//	Debug.Log ("initPos = " + initPos);
-//	Debug.Log ("maxpoint = " + maxPoint);
-//
-//
-//	float angle = Mathf.Atan2 (maxPoint.z - initPos.z, maxPoint.x - initPos.x);
-//	angle *= Mathf.Rad2Deg;
-//	angle *= -1;
-//	lineCollider.transform.Rotate (0f, angle, 0f);
 
 }

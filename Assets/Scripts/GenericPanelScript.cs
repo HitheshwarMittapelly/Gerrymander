@@ -5,12 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 
 public class GenericPanelScript : MonoBehaviour {
-
-	public Text infoAbtPlanet;
-	public Text infoAbtFaction;
-	public Text infoMiscellaneous;
-	public Image factionFigureHead;
-
+    
+    //References to various buttons in the scene panels
 	public Button okayButton;
     public Button startButton;
     public Button objectiveOkayButton;
@@ -23,6 +19,7 @@ public class GenericPanelScript : MonoBehaviour {
     public Button retryButton;
     public Button exitButton;
 
+    //All the panel objects
     public GameObject genericPanelObject;
     public GameObject startGamePanel;
     public GameObject objectivePanel1;
@@ -32,6 +29,7 @@ public class GenericPanelScript : MonoBehaviour {
     public GameObject retryPanel;
     public GameObject victoryPanel;
 
+    //sounds to be played
     public AudioClip objectivePopUp;
     public AudioClip objectivePopDown;
     public AudioClip retry;
@@ -40,6 +38,8 @@ public class GenericPanelScript : MonoBehaviour {
     private bool objectiveOneStarted = false;
     private bool objectiveTwoStarted = false;
 
+
+    //singleton pattern
     private GameManagerScript gameManagerInstance;
     private static GenericPanelScript genericPanelScript;
 
@@ -58,7 +58,8 @@ public class GenericPanelScript : MonoBehaviour {
 		return genericPanelScript;
 
 	}
-
+    //All the panel related functions are self explanatory
+    //load the start menu at the very start of the game
     public void bringUpStartMenu()
     {
         startGamePanel.SetActive(true);
@@ -67,11 +68,14 @@ public class GenericPanelScript : MonoBehaviour {
 
 
     }
+
     void closeStartMenu()
     {
         startGamePanel.SetActive(false);
         bringUpObjective1();
     }
+
+    //Pop up objective one panel and stuff related with it
     public void bringUpObjective1()
     {
 
@@ -104,6 +108,7 @@ public class GenericPanelScript : MonoBehaviour {
        
     }
 
+    //This is active when the game runs. It has pause and redo buttons
     void startGameRunPanel()
     {
         gameRunPanel.SetActive(true);
@@ -136,6 +141,7 @@ public class GenericPanelScript : MonoBehaviour {
     void exitGame()
     {
         Application.Quit();
+
     }
     void bringUpCurrentObjective()
     {
@@ -185,23 +191,6 @@ public class GenericPanelScript : MonoBehaviour {
       
     }
 
-    public void bringUpInfo(string infoAbtPlanet, string infoAbtFaction, string infoMiscellaneous, Sprite factionFigureHead)
-    {
-        genericPanelObject.SetActive(true);
-        this.infoAbtPlanet.text = infoAbtPlanet;
-        this.infoAbtFaction.text = infoAbtFaction;
-        this.infoMiscellaneous.text = infoMiscellaneous;
-        this.factionFigureHead.sprite = factionFigureHead;
-        okayButton.onClick.RemoveAllListeners();
-        okayButton.onClick.AddListener(closeGenericPanel);
-
-
-        okayButton.gameObject.SetActive(true);
-    }
-    void closeGenericPanel()
-    {
-        genericPanelObject.SetActive(false);
-    }
 
     public void bringUpRetryPanel()
     {

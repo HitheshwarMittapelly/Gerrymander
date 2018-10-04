@@ -155,8 +155,8 @@ PlayerSettings:
     Android: com.TeamElevenFingers.GerryMander
   buildNumber: {}
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 24
-  AndroidTargetSdkVersion: 25
+  AndroidMinSdkVersion: 21
+  AndroidTargetSdkVersion: 21
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   stripEngineCode: 1
