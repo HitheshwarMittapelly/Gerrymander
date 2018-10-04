@@ -21,6 +21,7 @@ public class GenericPanelScript : MonoBehaviour {
     public Button currentObjectiveButton;
     public Button exitGameButton;
     public Button retryButton;
+    public Button exitButton;
 
     public GameObject genericPanelObject;
     public GameObject startGamePanel;
@@ -30,6 +31,11 @@ public class GenericPanelScript : MonoBehaviour {
     public GameObject pausePanel;
     public GameObject retryPanel;
     public GameObject victoryPanel;
+
+    public AudioClip objectivePopUp;
+    public AudioClip objectivePopDown;
+    public AudioClip retry;
+
 
     private bool objectiveOneStarted = false;
     private bool objectiveTwoStarted = false;
@@ -68,7 +74,11 @@ public class GenericPanelScript : MonoBehaviour {
     }
     public void bringUpObjective1()
     {
+
+        SoundManagerScript.instance.RandomizeSfx(objectivePopUp);
+        
         objectivePanel1.SetActive(true);
+       
         objectiveOkayButton.onClick.RemoveAllListeners();
         if (!objectiveOneStarted)
         {
@@ -86,6 +96,9 @@ public class GenericPanelScript : MonoBehaviour {
     void startObjective1()
     {
         objectivePanel1.SetActive(false);
+       
+        SoundManagerScript.instance.RandomizeSfx(objectivePopDown);
+ 
         this.GetComponent<GameManagerScript>().startObjectiveOne();
         startGameRunPanel();
        
@@ -116,6 +129,13 @@ public class GenericPanelScript : MonoBehaviour {
         currentObjectiveButton.onClick.RemoveAllListeners();
         currentObjectiveButton.onClick.AddListener(bringUpCurrentObjective);
 
+        exitButton.onClick.RemoveAllListeners();
+        exitButton.onClick.AddListener(exitGame);
+
+    }
+    void exitGame()
+    {
+        Application.Quit();
     }
     void bringUpCurrentObjective()
     {
@@ -140,13 +160,17 @@ public class GenericPanelScript : MonoBehaviour {
     }
     public void bringUpObjective2()
     {
+     
+        SoundManagerScript.instance.RandomizeSfx(objectivePopUp);
         objectivePanel2.SetActive(true);
         objective2OkayButton.onClick.RemoveAllListeners();
         objective2OkayButton.onClick.AddListener(startObjective2);
+       
     }
 
     void startObjective2()
     {
+        SoundManagerScript.instance.RandomizeSfx(objectivePopDown);
         objectivePanel2.SetActive(false);
         if (!objectiveTwoStarted)
         {
@@ -181,10 +205,13 @@ public class GenericPanelScript : MonoBehaviour {
 
     public void bringUpRetryPanel()
     {
+        
+        SoundManagerScript.instance.RandomizeSfx(retry);
         retryPanel.SetActive(true);
 
         retryButton.onClick.RemoveAllListeners();
         retryButton.onClick.AddListener(retryLevel);
+        
 
     }
     void retryLevel()

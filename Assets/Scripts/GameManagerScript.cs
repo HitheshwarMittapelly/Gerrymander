@@ -19,7 +19,7 @@ public class GameManagerScript : MonoBehaviour {
     public GameObject GPP_H;
     public GameObject GPP_G;
 
-
+    
 
     private GameObject text;
     public GameObject minDistricts;
