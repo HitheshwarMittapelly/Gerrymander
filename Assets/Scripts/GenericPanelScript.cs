@@ -20,7 +20,7 @@ public class GenericPanelScript : MonoBehaviour {
     public Button continueButton;
     public Button currentObjectiveButton;
     public Button exitGameButton;
- 
+    public Button retryButton;
 
     public GameObject genericPanelObject;
     public GameObject startGamePanel;
@@ -28,13 +28,18 @@ public class GenericPanelScript : MonoBehaviour {
     public GameObject objectivePanel2;
     public GameObject gameRunPanel;
     public GameObject pausePanel;
+    public GameObject retryPanel;
+    public GameObject victoryPanel;
+
     private bool objectiveOneStarted = false;
     private bool objectiveTwoStarted = false;
 
+    private GameManagerScript gameManagerInstance;
     private static GenericPanelScript genericPanelScript;
 
     private void Start()
     {
+        gameManagerInstance = GameManagerScript.instance;
         bringUpStartMenu();
     }
 
@@ -92,6 +97,13 @@ public class GenericPanelScript : MonoBehaviour {
         pauseButton.onClick.RemoveAllListeners();
         pauseButton.onClick.AddListener(bringUpPausePanel);
 
+        redoButton.onClick.RemoveAllListeners();
+        redoButton.onClick.AddListener(destroyAllLines);
+
+    }
+    void destroyAllLines()
+    {
+        gameManagerInstance.deleteAllLines();
     }
 
     void bringUpPausePanel()
@@ -122,7 +134,7 @@ public class GenericPanelScript : MonoBehaviour {
     void resumeGame()
     {
         objectivePanel1.SetActive(false);
-
+        objectivePanel2.SetActive(false);
         pausePanel.SetActive(false);
         this.GetComponent<GameManagerScript>().Map.GetComponent<MapScript>().canDraw = true;
     }
@@ -136,7 +148,17 @@ public class GenericPanelScript : MonoBehaviour {
     void startObjective2()
     {
         objectivePanel2.SetActive(false);
-        this.GetComponent<GameManagerScript>().startObjectiveTwo();
+        if (!objectiveTwoStarted)
+        {
+            this.GetComponent<GameManagerScript>().startObjectiveTwo();
+            objectiveTwoStarted = true;
+        }
+        else if (objectiveOneStarted)
+        {
+            objectiveOkayButton.onClick.AddListener(resumeGame);
+
+        }
+      
     }
 
     public void bringUpInfo(string infoAbtPlanet, string infoAbtFaction, string infoMiscellaneous, Sprite factionFigureHead)
@@ -157,4 +179,21 @@ public class GenericPanelScript : MonoBehaviour {
         genericPanelObject.SetActive(false);
     }
 
+    public void bringUpRetryPanel()
+    {
+        retryPanel.SetActive(true);
+
+        retryButton.onClick.RemoveAllListeners();
+        retryButton.onClick.AddListener(retryLevel);
+
+    }
+    void retryLevel()
+    {
+        retryPanel.SetActive(false);
+        destroyAllLines();
+    }
+    public void bringUpVictory()
+    {
+        victoryPanel.SetActive(true);
+    }
 }

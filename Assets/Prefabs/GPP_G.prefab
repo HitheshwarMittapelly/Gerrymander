@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 58282437153984330}
   - component: {fileID: 114015643463100064}
   m_Layer: 0
-  m_Name: MediumPlanet_green
-  m_TagString: GreenMedium
+  m_Name: GPP_G
+  m_TagString: GPP
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,10 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c76e4daebf52b1b4a82570b6b2a34066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  infoAbtPlanet: 
-  infoAbtFaction: 
-  infoMiscellaneous: 
-  factionFigureHead: {fileID: 21300000, guid: 883e2cda1131e684ca4a925db050dd4f, type: 3}
+  species: Galenius
 --- !u!212 &212106835484356976
 SpriteRenderer:
   m_ObjectHideFlags: 1

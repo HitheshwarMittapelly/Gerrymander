@@ -95,11 +95,17 @@ public class LineRendererScript : MonoBehaviour {
         textPosition.z = 3f;
         
 		GameManagerScript.instance.lineColliders.Add (polyCollider.gameObject);
+        //Debug.Log("adding line");
+        
+        
+            
+        
+       
 
 
 
-	}
-
+    }
+   
 
 
 //	BoxCollider lineCollider = new GameObject("LineCollider").AddComponent<BoxCollider>();

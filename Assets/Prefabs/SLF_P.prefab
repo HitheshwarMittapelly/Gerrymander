@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 58293225814782216}
   - component: {fileID: 114608210632515890}
   m_Layer: 0
-  m_Name: MediumPlanet_orange
-  m_TagString: OrangeMedium
+  m_Name: SLF_P
+  m_TagString: SLF
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1936907868355364}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.9, y: 3.5, z: 0}
+  m_LocalPosition: {x: -12.32738, y: -9.422621, z: -1.1539382e-17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,7 +56,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1.64
+  m_Radius: 0.78
 --- !u!114 &114608210632515890
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -68,10 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c76e4daebf52b1b4a82570b6b2a34066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  infoAbtPlanet: 
-  infoAbtFaction: 
-  infoMiscellaneous: 
-  factionFigureHead: {fileID: 21300000, guid: f9f64a64fbb1a5044bdba84dee8a9e04, type: 3}
+  species: Plizdorp
 --- !u!212 &212401456129974818
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -107,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 29f751568bbdb754996dcfbadef0c9d2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dae208d2d494daf4f9e398912e9479e9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

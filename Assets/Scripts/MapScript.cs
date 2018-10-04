@@ -94,6 +94,14 @@ public class MapScript : MonoBehaviour {
             {
 
                 lineInstance.GetComponent<LineRendererScript>().AddColliderToLine();
+                if (GameManagerScript.instance.lineColliders.Count >= 4)
+                {
+                    //Debug.Log("count greater than 2");
+                    if (GameManagerScript.instance.gameState == GameManagerScript.GameStates.OBJECTIVEONE)
+                        Invoke("doThis", 2f);
+                    else if (GameManagerScript.instance.gameState == GameManagerScript.GameStates.OBJECTIVETWO)
+                        Invoke("doThat", 2f);
+                }
 
                 //lineInstance = null;
             }
@@ -108,4 +116,14 @@ public class MapScript : MonoBehaviour {
 
 
 	}
+    void doThis()
+    {
+        GameManagerScript.instance.getActiveLines();
+    }
+
+    void doThat()
+    {
+        GameManagerScript.instance.getObjective2WinCond();
+    }
+
 }

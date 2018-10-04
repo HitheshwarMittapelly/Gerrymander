@@ -5,34 +5,50 @@ using UnityEngine.UI;
 
 public class LineColliderScript : MonoBehaviour {
 
-	private float pinkMediumCount = 0f;
-	private float greenMediumCount = 0f;
-    private float orangeMediumCount = 0f;
+	private float GPPCount = 0f;
+    private float hCount = 0f;
+    private float eCount = 0f;
+    private float gCount = 0f;
+    private float pCount = 0f;
+    private float SLFCount = 0f;
     public bool isDestroyed = false;
 	private GameObject text ;
 	private GameManagerScript.WinStates winState;
     public bool isCalculated = false;
     public int totalCount = 0;
+    
+    public bool isObj2Calculated = false;
 
 
     void OnTriggerEnter2D(Collider2D collider)
 	{
 		
-		if (collider.gameObject.CompareTag ("PinkMedium")) 
+		if (collider.gameObject.CompareTag ("GPP")) 
 		{
-			pinkMediumCount++;
+			GPPCount++;
             totalCount++;
-		}
-		if (collider.gameObject.CompareTag ("GreenMedium"))
-		{
-			orangeMediumCount++;
-            totalCount++;
-		}
-        if (collider.gameObject.CompareTag("OrangeMedium"))
-        {
-            greenMediumCount++;
-            totalCount++;
+            if (collider.gameObject.GetComponent<PlanetScript>().species == "Hiteshan")
+                hCount++;
+            else if (collider.gameObject.GetComponent<PlanetScript>().species == "Galenius")
+                gCount++;
+            else if (collider.gameObject.GetComponent<PlanetScript>().species == "Plizdorp")
+                pCount++;
+            
         }
+		if (collider.gameObject.CompareTag ("SLF"))
+		{
+			SLFCount++;
+            totalCount++;
+            if (collider.gameObject.GetComponent<PlanetScript>().species == "Hiteshan")
+                hCount++;
+            else if (collider.gameObject.GetComponent<PlanetScript>().species == "Galenius")
+                gCount++;
+            else if (collider.gameObject.GetComponent<PlanetScript>().species == "Plizdorp")
+                pCount++;
+            else if (collider.gameObject.GetComponent<PlanetScript>().species == "Emiloops")
+                eCount++;
+        }
+       
         if (collider.gameObject.GetComponent<LineColliderScript>())
         {
             //foreach(GameObject line in GameManagerScript.instance.lineColliders)
@@ -67,20 +83,20 @@ public class LineColliderScript : MonoBehaviour {
 
 	public GameManagerScript.WinStates calculatePercentage()
 	{
-
+        //Debug.Log(totalCount);
         isCalculated = true;
         winState = GameManagerScript.WinStates.NONE;
 
-        if (totalCount > 2)
+        if (totalCount >= 2)
         {
            
-            if (pinkMediumCount > orangeMediumCount && pinkMediumCount > greenMediumCount)
+            if (GPPCount > SLFCount)
             {
                 winState = GameManagerScript.WinStates.WIN;
                 //Debug.Log ("You win");
             }
             
-            else if (pinkMediumCount == orangeMediumCount && pinkMediumCount == greenMediumCount)
+            else if (GPPCount == SLFCount )
             {
                 winState = GameManagerScript.WinStates.NEUTRAL;
                 //Debug.Log ("It's a tie");
@@ -102,6 +118,53 @@ public class LineColliderScript : MonoBehaviour {
 
 		//Destroy (text, 5f);
 		return winState;
+    }
+
+    public GameManagerScript.WinStates calculateSpeciesPer()
+    {
+        totalCount = (int)(hCount + gCount + pCount + eCount);
+        winState = GameManagerScript.WinStates.NONE;
+        isObj2Calculated = true;
+        if (totalCount >= 2)
+        {
+
+            if (eCount > gCount && eCount > hCount && eCount > pCount)
+            {
+                winState = GameManagerScript.WinStates.WIN;
+                //Debug.Log("You win");
+            }
+
+            else if (eCount < gCount || eCount < hCount || eCount < pCount)
+            {
+                winState = GameManagerScript.WinStates.LOSE;
+                //Debug.Log("It's a lose");
+            }
+
+            else if (eCount == gCount && eCount == hCount && eCount == pCount)
+            {
+
+                winState = GameManagerScript.WinStates.NEUTRAL;
+               // Debug.Log("you tie");
+            }
+            else
+            {
+                Debug.Log("haha");
+                Debug.Log(eCount);
+                Debug.Log(gCount);
+                Debug.Log(pCount);
+                Debug.Log(hCount);
+                winState = GameManagerScript.WinStates.NONE;
+            }
+        }
+
+        //text = new GameObject();
+        //text.transform.position = this.transform.parent.GetComponent<LineRendererScript>().textPosition;
+        //text.AddComponent<TextMesh> ();
+        //text.GetComponent<TextMesh> ().color = Color.red;
+        //text.GetComponent<TextMesh>().text = winState.ToString();
+
+        //Destroy (text, 5f);
+        return winState;
     }
     //pinkPlanetPositions.Add(new Vector3(0.1f, 0.9f, 0));
     //    pinkPlanetPositions.Add(new Vector3(0.9f, 0.1f, 0));
